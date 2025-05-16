@@ -1,0 +1,7 @@
+#SPDX-License-Identifier: MIT-0
+---
+# vars file for create-file
+file_name: /tmp/myfile.txt
+file_content: |
+  This is a sample file created by Ansible.
+  You can modify this content as needed.

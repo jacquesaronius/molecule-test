@@ -1,0 +1,15 @@
+#SPDX-License-Identifier: MIT-0
+---
+# tasks file for create-file
+
+- name: Create a file
+  ansible.builtin.file:
+    path: "{{ file_name }}"
+    state: touch
+    mode: '0644'
+- name: Write content to the file
+  ansible.builtin.copy:
+    dest: /tmp/myfile.txt
+    content: "{{ file_content }}"
+    mode: '0644'
+  when: file_name is defined and file_content is defined
