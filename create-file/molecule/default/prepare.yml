@@ -1,0 +1,10 @@
+---
+- name: Prepare
+  hosts: all
+  gather_facts: false
+  tasks:
+    - name: Update package list
+      raw: DEBIAN_FRONTEND=noninteractive apt update
+
+    - name: Install Python
+      raw: DEBIAN_FRONTEND=noninteractive apt install -y python3

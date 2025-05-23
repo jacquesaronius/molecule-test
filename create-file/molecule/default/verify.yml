@@ -1,0 +1,30 @@
+- name: Verify
+  hosts: all
+  gather_facts: false
+  vars_files:
+    - "../../../{{ lookup('env', 'MOLECULE_PROJECT_DIRECTORY') | basename }}/vars/main.yml"
+  tasks:
+    - name: Output filename and content
+      ansible.builtin.debug:
+        msg: "Verifying the file {{ file_name }} with content {{ file_content }}"
+
+    - name: Validate that the file exists
+      ansible.builtin.stat:
+        path: "{{ file_name }}"
+      register: file_stat
+
+    - name: Fail if the file does not exist
+      ansible.builtin.fail:
+        msg: "The file does not exist"
+      when: not file_stat.stat.exists
+
+    - name: Validate that the file has the correct content
+      ansible.builtin.find:
+        name: "{{ file_name | dirname }}"
+        patterns: "{{ file_name | basename }}"
+        file_type: file
+        use_regex: false
+        read_whole_file: true
+        contains: "{{ file_content }}"
+      register: find_result
+      failed_when: find_result.matched != 1

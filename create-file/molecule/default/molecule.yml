@@ -5,3 +5,12 @@ platforms:
   - name: instance
     image: ubuntu:22.04
     pre_build_image: true
+scenario:
+  test_sequence:
+    - destroy
+    - create
+    - prepare
+    - converge
+    # - idempotence  # Comment this out to disable the check
+    - verify
+    - destroy
